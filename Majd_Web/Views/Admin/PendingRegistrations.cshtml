@@ -1,0 +1,73 @@
+﻿@model IEnumerable<ApplicationUser>
+
+<head>
+    <meta name="og:type" content="website" />
+    <meta name="twitter:card" content="photo" />
+    <link href="~/css/u1591u1604u1576u1575u1578-u1580u1607u1575u1578-u1575u1604u1593u1605u1604.css" rel="stylesheet" />
+    <link href="~/css/globals.css" rel="stylesheet" />
+    <link href="~/css/styleguide.css" rel="stylesheet" />
+</head>
+<body style="margin: 0; background: #f4f3f8">
+    <input type="hidden"
+           id="anPageName"
+           name="page"
+           value="u1591u1604u1576u1575u1578-u1580u1607u1575u1578-u1575u1604u1593u1605u1604" />
+    <div class="container-center-horizontal">
+        <div class="u1591u1604u1576u1575u1578-u1580u1607u1575u1578-u1575u1604u1593u1605u1604 screen">
+            <div class="frame-1190">
+                <div class="frame-container">
+                    <div class="frame-1190-1">
+                        <div class="text-3-1">طلبات جهات العمل</div>
+                    </div>
+                </div>
+                @if (Model.Any())
+                {
+                    foreach (var user in Model)
+                    {
+                        <div class="frame-154">
+                            <div class="frame-15434">
+                                <div class="frame-154-1">
+                                    <a class="text cairo-12" asp-controller="Admin" asp-action="ApproveEmployer" asp-route-UserId="@user.Id">
+                                        قبول
+                                        <i class="bi bi-check-circle-fill" style="color: green;"></i>
+
+                                    </a>
+                                </div>
+                                <div class="frame-154-1">
+                                    <a class="text cairo-12" asp-controller="Admin" asp-action="RejectEmployer" asp-route-UserId="@user.Id">
+                                        رفض
+                                        <i class="bi bi-x-circle-fill" style="color: red;"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="frame-15435">
+                                <div class="frame-1">
+                                    <div class="frame-15432">
+                                        <div class="text-1 text-4 cairo-16-b">اسم المؤسسة: @user.OrganizationName</div>
+                                        <div class="text-2 text-4 cairo-12">
+                                            البريد الإلكتروني: @user.Email
+                                        </div>
+                                        <div class="text-2 text-4 cairo-12">
+                                            قطاع العمل: @user.CareerSectore
+                                        </div>
+                                        <div class="text-2 text-4 cairo-12">
+                                            الرقم الوظيفي: @user.CommercialRegister
+                                        </div>
+                                    </div>
+                                </div>
+                                <img class="rectangle-4774"
+                                     src="~/img/user2.png"
+                                     alt="Rectangle 4774" />
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="text-1 text-4 cairo-16-b">
+                        لا يـــوجد طلـــبات حتـــى الآن
+                    </div>
+                }
+            </div>
+        </div>
+</body>

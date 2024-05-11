@@ -1,0 +1,58 @@
+﻿@model IEnumerable<ApplicationUser>
+
+<meta charset="utf-8" />
+<!--<meta name=description content="This site was generated with Anima. www.animaapp.com"/>-->
+<!-- <link rel="shortcut icon" type=image/png href="https://animaproject.s3.amazonaws.com/home/favicon.png" /> -->
+<meta name="viewport" content="width=1440, maximum-scale=1.0" />
+<link rel="shortcut icon" type="image/png" href="https://animaproject.s3.amazonaws.com/home/favicon.png" />
+<meta name="og:type" content="website" />
+<meta name="twitter:card" content="photo" />
+<link rel="stylesheet"
+      type="text/css"
+      href="~/css/u1578u1601u1575u1589u1610u1604-u1575u1604u1608u1592u1610u1601u1577.css" />
+<link rel="stylesheet" type="text/css" href="~/css/styleguide.css" />
+<link rel="stylesheet" type="text/css" href="~/css/globals.css" />
+
+<body style="margin: 0; background: #ffffff">
+    <input type="hidden"
+           id="anPageName"
+           name="page"
+           value="u1578u1601u1575u1589u1610u1604-u1575u1604u1608u1592u1610u1601u1577" />
+    <div class="container-center-horizontal">
+        <div class="u1578u1601u1575u1589u1610u1604-u1575u1604u1608u1592u1610u1601u1577 screen">
+            <div class="overlap-group3">
+
+                <div class="frame-1190-1 frame-1190-3">
+                    <div class="frame-1190-2 frame-1190-3">
+                        <div class="text-253 text-1 cairo-bold-smalt-blue-20px">قائمة المتقدمين للوظيفة:</div>
+                    </div>
+                    <div class="frame-15453">
+                        @foreach (var user in Model)
+                        {
+                            <div class="frame-154">
+                                <div class="frame-15434">
+                                    <div class="frame-154-1 frame-1190-3">
+                                        <a class="text-253 text-1 text-3 cario-20" asp-controller="Profile" asp-action="ApplicantInfo" asp-route-UserId="@user.Id"> @user.FullName</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="frame-1212">
+                        <a href="@Url.Action("JobList")" class="button-1">
+                            <div class="text-26 text-1 cairo-medium-star-dust-14px">الرجوع</div>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+
+    }
+}

@@ -1,0 +1,119 @@
+﻿@using Majd_Web.Models.enums
+@model List<Job>
+
+
+<link rel="stylesheet"
+      type="text/css"
+      href="~/css/u1606u1588u1585-u1575u1604u1593u1585u1590-u1575u1604u1608u1592u1610u1601u1610.css" />
+
+<link rel=”stylesheet” href=”https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css” />
+
+<link rel="stylesheet"
+      type="text/css"
+      href="~/css/u1608u1592u1575u1610u1620u1601-u1575u1604u1588u1585u1603u1577-2.css" />
+<link rel="stylesheet" type="text/css" href="~/css/styleguide.css" />
+<link rel="stylesheet" type="text/css" href="~/css/globals.css" />
+
+<body style="margin: 0; background: #ffffff">
+    <input type="hidden"
+           id="anPageName"
+           name="page"
+           value="u1608u1592u1575u1610u1620u1601-u1575u1604u1588u1585u1603u1577-2" />
+    <div class="container-center-horizontal">
+        <div class="u1608u1592u1575u1610u1620u1601-u1575u1604u1588u1585u1603u1577-2 screen">
+
+
+
+
+            <div class="flex-row flex">
+                <div class="overlap-group2">
+                    <div class="frame-1179">
+                        @{
+                            <partial name="_news" />
+
+                        }
+                    </div>
+                </div>
+                <div class="flex-col flex">
+                        <div class="frame-15417">
+                            <div class="frame-1229">
+                                <form class="d-flex">
+                                    <select class="form-control cairo-12" name="selectedIndustry" asp-controller="Job" asp-action="JobOffers">
+                                        <option value="">اختر مجال التوظيف</option>
+                                        @foreach (var item in Enum.GetValues(typeof(JobIndustry)))
+                                        {
+                                            <option value="@item">@item</option>
+                                        }
+                                    </select>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-outline-secondary cairo-12">تصفية</button>
+                                    </div>
+                                </form>
+                                <div class="frame-1227">
+                                    <div class="frame-1161">
+                                        <div class="modal-header">
+                                            <div class="text-114 text cairo-bold-smalt-blue-20px"> فرص العمل</div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+
+                    <div class="frame-container">
+                        <div class="frame-15443 cairo-12">
+
+                            @if (Model != null)
+                            {
+                                @foreach (var job in Model)
+                                {
+
+                                    <div class="frame-15436">
+                                        <div class="frame-15434">
+                                            <div class="frame-154">
+                                                <div class="text-1-1 text-1-5">@job.JobType</div>
+                                                <i class="bi bi-clock"></i>
+                                            </div>
+                                            <div class="frame-154">
+                                                <div class="text-1-1 text-1-5">انظر التفاصيل لمعرفة المزيد</div>
+                                                <i class="bi bi-card-text"></i>
+                                            </div>
+                                        </div>
+                                        <div class="frame-15435">
+                                            <div class="frame-1-1">
+                                                <div class="frame-15432">
+                                                    <div class="text-1-2 text-1-5 cairo-16-b">
+                                                        الوظيفة: @job.Title
+                                                    </div>
+                                                    @if (job.User != null)
+                                                    {
+                                                        <div class="text-1-3 text-1-5">
+                                                            اسم الشركة: @job.User.OrganizationName
+                                                        </div>
+                                                    }
+                                                </div>
+                                                <div class="text-1-4 text-1-5">@job.Location</div>
+                                                <a href="@Url.Action("JobDetails", new { id = job.Id  })" class="cairo-medium-trendy-pink-13px">تفاصيل</a>
+
+                                            </div>
+                                            <img class="rectangle-4774" src="~/img/user2.png" alt="Rectangle 4774" />
+
+                                        </div>
+
+                                    </div>
+                                }
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+
+    }
+}

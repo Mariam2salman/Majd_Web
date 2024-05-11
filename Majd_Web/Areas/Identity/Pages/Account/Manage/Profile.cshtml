@@ -1,0 +1,137 @@
+﻿@page
+@model IndexModel
+
+<h3>@ViewData["Title"]</h3>
+@* <partial name="_StatusMessage" for="StatusMessage" />
+ *@<div class="row">
+
+    @if (!string.IsNullOrEmpty(Model.Input.ProfilePicture))
+    {
+        <div class="col-md-4">
+            <img src="~/ProfilePictures/@Model.Input.ProfilePicture" style="width:170px;height:170px" />
+        </div>
+    }
+    <div class="col-md-5">
+        <style>
+            /* Add CSS styles for the page layout */
+            body {
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+                margin: 0;
+                padding: 0;
+                background-color: #ECEAEF;
+            }
+
+            .container {
+                flex: 1;
+                padding: 20px;
+            }
+        </style>
+        <form id="profile-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger">
+            </div>
+            @if (User.IsInRole("Employer"))
+            {
+                <div class="container">
+         
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.FirstName" class="form-control" placeholder="." />
+                            <label asp-for="Input.FirstName" class="form-label"></label>
+                            <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.PhoneNumber" class="form-control" placeholder="." />
+                            <label asp-for="Input.PhoneNumber" class="form-label"></label>
+                            <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.About" class="form-control" placeholder="Please enter your Company description." />
+                            <label asp-for="Input.About" class="form-label"></label>
+                            <span asp-validation-for="Input.About" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.UrlLocation" class="form-control" placeholder="." />
+                            <label asp-for="Input.UrlLocation" class="form-label"></label>
+                            <span asp-validation-for="Input.UrlLocation" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Headquarter" class="form-control" placeholder="." />
+                            <label asp-for="Input.Headquarter" class="form-label"></label>
+                            <span asp-validation-for="Input.Headquarter" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.CareerSectore" class="form-control" placeholder="." />
+                            <label asp-for="Input.CareerSectore" class="form-label"></label>
+                            <span asp-validation-for="Input.CareerSectore" class="text-danger"></span>
+                        </div>
+                        <!-- Submit button or additional form fields -->
+                    
+                </div>
+            }
+            @if (User.IsInRole("Alumni"))
+            {
+                <div class="container">
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.FirstName" class="form-control" placeholder="." />
+                            <label asp-for="Input.FirstName" class="form-label"></label>
+                            <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.LastName" class="form-control" placeholder="." />
+                            <label asp-for="Input.LastName" class="form-label"></label>
+                            <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.PhoneNumber" class="form-control" placeholder="." />
+                            <label asp-for="Input.PhoneNumber" class="form-label"></label>
+                            <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.About" class="form-control" placeholder="." />
+                            <label asp-for="Input.About" class="form-label"></label>
+                            <span asp-validation-for="Input.About" class="text-danger"></span>
+                        </div>
+
+                    <div class="form-floating mb-3">
+
+                        <label class="form-label" for="ProfilePicture">Profile picture</label>
+                        <input asp-for="Input.ImageFile" />
+                    </div>
+                        <!-- Submit button or additional form fields -->
+                    
+                </div>
+
+            }
+
+            <style>
+                #update-profile-button:hover {
+                    background-color: white;
+                    fon color: #ffffff;
+                }
+            </style>
+
+            <div class="frame-1212">
+                <div  >
+                    <button id="update-profile-button" type="submit" Style=" background-color: #4F7C95; outline: none;" class=" form-control text-5 cairo-medium-white-14px">
+                        حفظ
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+

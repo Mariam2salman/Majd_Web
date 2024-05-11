@@ -1,0 +1,76 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Majd_Web.Models
+
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<ul class="navbar-nav ">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        var user = await UserManager.FindByEmailAsync(User.Identity.Name);
+        <li class="nav-item">
+            <a class="nav-link text-21 text-1 cairo-12" asp-area="" asp-controller="Alumni" asp-action="AlumniList"><i class="bi bi-mortarboard"></i> البحث عن خريجين</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-21 text-1 cairo-12" asp-area="" asp-controller="Alumni" asp-action="AlumniHomepage"><i class="bi bi-sticky"></i> منشورات الخريجين</a>
+        </li>
+
+        @if (await UserManager.IsInRoleAsync(user, "Alumni"))
+        {
+            <li class="nav-item">
+
+                <a class="nav-link text-21 text-1 cairo-12" asp-controller="Job" asp-action="JobOffers"><i class="bi bi-briefcase"></i>  الوظائف</a>
+            </li>
+        <li class="nav-item">
+                <a class="nav-link text-21 text-1 cairo-12" asp-area="" asp-controller="Profile" asp-action="AlumniInfo">
+                ملفك الشخصي
+            </a>
+            </li>
+        <li class="nav-item">
+
+                <a class="nav-link text-21 text-1 cairo-12" href="@Url.Action("AlumniPage", "Alumni", new { id = user.Id })">منشوراتك</a>
+
+            </li>
+
+        }
+        else if (await UserManager.IsInRoleAsync(user, "Employer"))
+        {
+            
+            <li class="nav-item">
+
+            <a class="nav-link text-21 text-1 cairo-12" href="@Url.Action("JobOffers", "job", new { id = user.Id })"><i class="bi bi-briefcase"></i>  الوظائف</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-21 text-1 cairo-12" asp-controller="Profile" asp-action="EmployerInfo"><i class="bi bi-person"></i>  حسابك</a>
+            </li>
+        }
+        else if (await UserManager.IsInRoleAsync(user, "Admin"))
+        {
+
+            <li class="nav-item">
+
+                <a class="nav-link text-21 text-1 cairo-12" asp-controller="Admin" asp-action="AdminHomepage"><i class="bi bi-person"></i>إدارة حسابك</a>
+
+            </li>
+        }
+
+        <li class="nav-item">
+            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button id="logout" type="submit" Style="border: none; background:none; outline: none;" class="nav-link text-21 text-1 cairo-12"><i class="bi bi-box-arrow-right"></i>  تسجيل الخروج</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-21 text-1 cairo-12" id="register" asp-area="Identity" asp-page="/Account/EmployerRegister"><i class="bi bi-plus-square"></i>  تسجيل جهة عمل</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-21 text-1 cairo-12" id="register" asp-area="Identity" asp-page="/Account/AlumniRegister"><i class="bi bi-plus-square"></i>  تسجيل خريج</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-21 text-1 cairo-12" id="login" asp-area="Identity" asp-page="/Account/Login"><i class="bi bi-box-arrow-in-right"></i>  تسجيل الدخول</a>
+        </li>
+    }
+</ul>

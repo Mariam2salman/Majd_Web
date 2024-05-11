@@ -1,0 +1,97 @@
+﻿@model IEnumerable<ApplicationUser>
+<head>
+<link rel="stylesheet"
+      type="text/css"
+      href="~/css/u1606u1588u1585-u1575u1604u1593u1585u1590-u1575u1604u1608u1592u1610u1601u1610.css" />
+<link rel="stylesheet" type="text/css" href="~/css/styleguide.css" />
+<link rel="stylesheet" type="text/css" href="~/css/globals.css" />
+</head>
+<body style="margin: 0; background: #ffffff">
+    <input type="hidden"
+           id="anPageName"
+           name="page"
+           value="u1606u1588u1585-u1575u1604u1593u1585u1590-u1575u1604u1608u1592u1610u1601u1610" />
+    <div class="container-center-horizontal">
+        <div class="u1606u1588u1585-u1575u1604u1593u1585u1590-u1575u1604u1608u1592u1610u1601u1610 screen">
+            <div class="overlap-group3">
+                <div class="text-163 frame-2">البحث عن خريجين</div>
+                <div class="row">
+                    <div class="col-md-12 p-4">
+                        <form class="d-flex" asp-controller="Alumni" asp-action="AlumniList">
+                            <input name="searchTerm" class="form-control me-1 text cairo-12" type="search" placeholder="اسم الخريج" aria-label="Search ">
+                            <select class="form-control" name="selectedMajor">
+                                <option value="">Select Major </option>
+                                @if (ViewBag.Major != null)
+                                {
+                                    @foreach (var item in ViewBag.Major)
+                                    {
+                                        <option value="@item.Id">@item.MajorName</option>
+                                    }
+                                }
+
+                            </select>
+
+                            <br>
+                            <div class="form-group">
+                                <div class="button-1 button-3" style=" width: 100%">
+                                    <button type="submit" Style="border: none; background: none; outline: none; width: 100%" class="text-5 cairo-medium-white-14px">ابحث</button>
+                                </div>
+
+                            </div>
+                            <br>
+                        </form>
+                        <hr>
+
+
+
+                        <table class="table">
+                            <thead style="background-color: #F5F5F7; justify-items:center">
+                                <tr>
+                                    <th scope="col" class="text text-163 " style="text-align:center">الاسم الأول</th>
+                                    <th scope="col" class="text text-163" style="text-align:right">الاسم الأخير</th>
+                                    <th scope="col" class="text text-163" style="text-align:right">الـــــتخصص</th>
+
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Any())
+                                {
+                                    @foreach (var user in Model)
+                                    {
+                                        <tr>
+                                            <td class="text text-163 "> @user.FirstName </td>
+                                            <td class="text text-163 "> @user.LastName </td>
+                                            <td class="text text-163 ">
+                                                @if (user.Major != null)
+                                                    @user.Major.MajorName
+
+
+
+
+                                            </td>
+
+
+                                        </tr>
+                                    }
+
+                                }
+
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+
+    }
+}

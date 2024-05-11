@@ -1,0 +1,302 @@
+﻿@model AlumniPostViewModel
+@using Majd_Web.ViewModels;
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1440, maximum-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="~/css/AlumniHomepage.css" />
+
+</head>
+<body style="margin: 0; background: #ffffff">
+    @{
+        string currentUrl = Context.Request.Scheme + "://" + Context.Request.Host + Context.Request.Path;
+        string enc = System.Net.WebUtility.UrlEncode(currentUrl);
+        string text = Model != null ? System.Net.WebUtility.UrlEncode(Model.Post.PostContent) : "";
+    }
+    @{
+        var user = await UserManager.FindByEmailAsync(User.Identity.Name);
+    }
+
+    <input type="hidden"
+           id="anPageName"
+           name="page"
+           value="u1575u1604u1589u1601u1581u1577-u1575u1604u1585u1610u1620u1610u1587u1610u1577u92u1575u1604u1582u1585u1610u1580" />
+    <div class="container-center-horizontal">
+        <div class="u1575u1604u1589u1601u1581u1577-u1575u1604u1585u1610u1620u1610u1587u1610u1577u92u1575u1604u1582u1585u1610u1580 screen">
+
+            <div class="frame-1199">
+                <div class="frame-1177-1">
+                    <div class="overlap-group overlap">
+
+                        <div class="frame-1179">
+                            @{
+                                <partial name="_news" />
+
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="frame-1198 ">
+
+                    <form method="post" asp-action="AlumniHomepage" enctype="multipart/form-data">
+                        @Html.HiddenFor(m => m.Post.UserId)
+                        @if (await UserManager.IsInRoleAsync(user, "Alumni"))
+                        { 
+                        <div class="group-1 mb-3">
+                            <div class="overlap-group1 overlap">
+                                <div class="group-2">
+                                    <div class="overlap-group-1">
+                                        <div class="group-2">
+
+                                            <div class="overlap-group-1">
+                                                <div class="frame-1174">
+                                                        <input asp-for="@Model.Post.PostContent" class="form-control" style="width:550px; border-radius: 25px;" placeholder="منشور جديد" id="PostContent" oninput="countCharacters()" maxlength="240" onclick="openInputWindow()" />
+                                                        <button type="submit" style="border: none ; background: none;">
+                                                            <img class="phosphor-icons-pencil-simple-line"
+                                                                 src="~/img/phosphor-icons---pencilsimpleline@2x.png"
+                                                                 alt="Phosphor Icons / PencilSimpleLine" />
+                                                        </button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div style=" position: absolute; right: 55px;" id="charCount"></div>
+                                    </div>
+                                </div>
+                                <div class="frame-5">
+                                    <div class="frame-2">
+                                        <label for="image-upload" class="custom-file-upload،text-1 cairo-14">اضافة صورة</label>
+                                        <input id="image-upload" type="file" name="imageFile" accept="image/*" class="form-control border-0 shadow" style="display:none;" onchange="previewImage(event);" />
+
+                                        <div class="group-3">
+                                            <div class="ellipse"></div>
+                                        </div>
+                                    </div>
+                                    <div class="frame-2">
+                                        <label for="video-upload" class="custom-file-upload،text-1 cairo-14">اضافة فيديو</label>
+                                        <input id="video-upload" type="file" name="videoFile" accept="video/*" class="form-control border-0 shadow" style="display:none;" onchange="previewVideo(event);" />
+                                        <img class="exclude" src="~/img/exclude@2x.png" alt="Exclude" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        }
+                    </form>
+
+                        <div class="frame-1174-1">
+                        @foreach (var post in Model.Posts.OrderByDescending(p => p.PostDate))
+
+                            {
+                                <div class="post-template mt-2">
+                                    <div class="hearder">
+
+                                        @if (User.Identity.Name == post.User.UserName)
+                                        {
+                                            <form asp-controller="Alumni" asp-action="DeletePost" method="post" style="display: inline;">
+                                                @Html.Hidden("id", post.Id)
+                                                <button type="submit" class="btn btn-sm btn-outline-danger">حذف</button>
+                                            </form>
+
+                                        }
+                                        <div class="company-info">
+                                            <div class="text-block">
+                                                <a href="@Url.Action("AlumniPage", "Alumni", new { id = post.UserId })" class="company-name-8 valign-text-middle text-1 cairo-14">@post.User.FullName</a>
+
+                                                <div class="publication-info">
+                                                    <div class="time-of-publication valign-text-middle roboto-normal-dove-gray-12px">@post.PostDate</div>
+                                                    <img class="separator" src="~/img/separator@2x.png" alt="Separator" />
+                                                    <img class="globe" src="~/img/globe@2x.png" alt="Globe" />
+                                                </div>
+                                            </div>
+                                            @if (!string.IsNullOrEmpty(post.User.ProfilePicture))
+                                            {
+
+                                                <img class="logo-place-holder" src="~/ProfilePictures/@post.User.ProfilePicture" />
+
+                                            }
+                                            else
+                                            {
+                                                <img class="logo-place-holder" src="~/img/user.png" alt="Logo place holder" />
+                                            }
+
+                                        </div>
+                                    </div>
+                                    <div class="body">
+                                        <input type="text" class="text-4 valign-text-middle roboto-normal-eerie-black-14px" style="border: none;" value="@post.PostContent" readonly />
+                                    </div>
+                                    @if (!string.IsNullOrEmpty(post.ImageUrl))
+                                    {
+                                        <img src="@post.ImageUrl" alt="Post Image" style="width: 600px; height:200px;" />
+                                    }
+                                    @if (!string.IsNullOrEmpty(post.VideoUrl))
+                                    {
+                                        <video width="600" height="200" controls>
+                                            <source src="@post.VideoUrl" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    }
+                                    <div class="frame-26">
+                                    </div>
+                                    <div class="actions">
+                                        <div class="like-group">
+                                            <div class="frame-1172">
+                                                <div class="tag">
+                                                    <button onclick="window.open('https://twitter.com/intent/tweet?url=@enc&text=@text', '_blank', 'noopener,noreferrer,nofollow')" style="border: none; background: none;" class="cairo-medium-cape-cod-12px">
+                                                        X مشاركة على
+                                                    <i class="bi bi-share"></i>
+                                                    </button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="like-group">
+                                            <div class="frame-1172">
+                                                <div class="tag-2">
+                                                    <div class="tag-3 cairo-medium-cape-cod-12px">تعليق</div>
+                                                <i class="bi bi-chat"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="like-group">
+
+                                            <div class="frame-1172">
+                                                <div class="tag-4">
+                                                    <form method="post" action="@Url.Action("Like", "Alumni", new { id = post.Id })" class="like-form">
+                                                        <button type="submit" class="like-button ، cairo-medium-cape-cod-12px" style="border: none; background: none;"
+                                                        data-post-id="@post.Id">
+                                                            إعجاب(@post.LikeCount)
+                                                        <i class="bi bi-heart"></i>
+                                                        </button>
+
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                </div>
+
+
+                <div class="modal " style="height:fit-content">
+                    <div class="group-15415">
+                        <div class="overlap-group-2">
+
+                            @if (!string.IsNullOrEmpty(user.ProfilePicture))
+                            {
+                                <div class="col-md-4">
+                                    <img class="round" src="~/ProfilePictures/@user.ProfilePicture" />
+                                </div>
+                            }
+                            else
+                            {
+                                <img class="round" src="~/img/user.png" alt="Round" />
+                            }
+
+                        </div>
+                    </div>
+                    <div class="frame-1161 cairo-medium-cape-cod-14px">
+                        <div class="modal-header"><div class="text-12-1">@user.FullName</div></div>
+                        <div class="frame-3">
+                            <div class="text-13-1">@user.Major</div>
+                            <i class="bi bi-mortarboard"></i>
+                        </div>
+                        <div class="frame-3">
+                            <div class="faesalahmadgmailcom">@User.Identity.Name</div>
+                            <i class="bi bi-envelope"></i>
+                        </div>
+                        <div class="frame-2-2 frame-2-4">
+                            <div class="text-14">@user.Headquarter</div>
+                            <i class="bi bi-geo-alt"></i>
+                        </div>
+                    </div>
+                    <div class="frame-1160">
+                        <div class="frame-3-1">
+                            <div class="text-15">
+                                <a asp-area="" asp-controller="Profile" asp-action="AlumniInfo" class="text_label" style="color:#4F7C95">
+                                    اضغط هنا لاستكمال ملفك الشخصي
+                                </a>
+                            </div>
+                        </div>
+                        <div class="frame-1161-1">
+                            <div class="progress-indicatior">
+                                <div class="indicator"></div>
+                                <div class="section-1 section"></div>
+                                <div class="section-2 section"></div>
+                                <div class="section-3 section"></div>
+                                <div class="section-4 section"></div>
+                            </div>
+                            <div class="frame-2-3 frame-2-4"><div class="text-16">30% تم اكماله</div></div>
+                        </div>
+                        <div class="frame-1165 cairo-14">
+                            <div class="frame-11-2 frame-11-3"><img class="line-79" src="~/img/line-79@2x.png" alt="Line 79" /></div>
+                            <div class="frame-11-1 frame-11-3">
+                                <div class="text-2">1\0</div>
+                                <div class="frame-1162">
+                                    <div class="text-3">السيرة الشخصية</div>
+                                    <div class="group-15416-1"><img class="vector-1" src="~/img/vector-2@2x.png" alt="Vector" /></div>
+                                </div>
+                            </div>
+                            <div class="frame-11-2 frame-11-3"><img class="line-79" src="~/img/line-79@2x.png" alt="Line 79" /></div>
+                            <div class="frame-11-1 frame-11-3">
+                                <div class="text-2">1\1</div>
+                                <div class="frame-1162">
+                                    <div class="text-3">التعليم</div>
+                                    <div class="group-15416"><img class="vector" src="~/img/vector@2x.png" alt="Vector" /></div>
+                                </div>
+                            </div>
+                            <div class="frame-11-2 frame-11-3"><img class="line-79" src="~/img/line-79@2x.png" alt="Line 79" /></div>
+                            <div class="frame-11-1 frame-11-3">
+                                <div class="text-2">1\0</div>
+                                <div class="frame-1162">
+                                    <div class="text-3">الخبرة</div>
+                                    <div class="group-15416-1"><img class="vector-2" src="~/img/vector-2@2x.png" alt="Vector" /></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.like-button').click(function (event) {
+            event.preventDefault();  // This line prevents the form from being submitted
+
+            var button = $(this);
+            var postId = button.data('post-id');
+            $.post('@Url.Action("Like", "alumni")', { id: postId })
+                .done(function () {
+                    var likes = parseInt(button.text().match(/\d+/)[0]) + 1;  // Extract the current like count and increment it
+                    button.html('إعجاب (' + likes + ') <img class="phosphor-icons-heart-straight" src="~/img/phosphor-icons---heartstraight-2@2x.png" alt="Phosphor Icons / HeartStraight" />');
+                    // Update the like count on the button
+                })
+                .fail(function () {
+                    alert('Error liking post.');
+                });
+        });
+    });
+</script>
+
+<script>
+    function countCharacters() {
+        var input = document.getElementById('PostContent');
+        var count = document.getElementById('charCount');
+        count.innerHTML = input.value.length + "/240";
+    }</script>
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+
+    }
+}

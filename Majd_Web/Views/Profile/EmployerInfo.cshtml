@@ -1,0 +1,145 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model ApplicationUser
+@inject UserManager<ApplicationUser> UserManager
+@using Majd_Web.Models;
+
+
+<head>
+    <input type="hidden"
+           id="anPageName"
+           name="page"
+           value="u1605u1606u1588u1608u1585u1575u1578-u1575u1604u1588u1585u1603u1577" />
+    <link rel="stylesheet"
+          type="text/css"
+          href="~/css/u1606u1588u1585-u1575u1604u1593u1585u1590-u1575u1604u1608u1592u1610u1601u1610.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/AlumniHomepage.css" />
+    <link rel="stylesheet"
+          type="text/css"
+          href="~/css/StyleAlumniEducation.css" />
+    <link rel="stylesheet"
+          type="text/css"
+          href="~/css/styleEmployerHomepage.css" />
+</head>
+<body style="margin: 0; background: #ffffff">
+    @{
+        var user = await UserManager.FindByEmailAsync(User.Identity.Name);
+    }
+    
+    <div class="container-center-horizontal">
+        <div class="u1605u1606u1588u1608u1585u1575u1578-u1575u1604u1588u1585u1603u1577 screen" style="height:fit-content">
+            <div class="flex-row">
+                <div class="overlap-group2">
+                    <div class="frame-1179">
+                        @{
+                            <partial name="_news" />
+
+                        }
+                    </div>
+                </div>
+                <div class="frame-15421">
+
+                    <div class="modal">
+                        <div class="frame-15417">
+                            <div class="frame-15416">
+                                <div class="overlap-group">
+                                    <img class="rectangle" src="~/img/rectangle-.png" alt="Rectangle " />
+                                </div>
+                            </div>
+                            <div class="frame-1229">
+                                <div class="frame-1227">
+                                    <div class="frame-1161">
+                                        <div class="modal-header">
+                                            <div class="text-114 text cairo-bold-smalt-blue-20px">شركـة @Model.OrganizationName </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="frame-15420">
+                        <div class="frame-1178">
+                            <div class="post-template">
+                                <div class="hearder">
+                                    <div class="frame-1225">
+                                        <a asp-area="Identity" asp-page="/Account/Manage/Profile">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                    </div>
+                                    <div class="company-info">
+                                        <div class="text-block">
+                                            <div class="frame-122">
+                                                <div class="frame-119">
+                                                    <div class="text-1 cairo-16-b">شركة @Model.OrganizationName </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <img class="logo-place-holder" src="~/img/user2.png" alt="Logo place holder" />
+                                    </div>
+                                </div>
+                                <div class="frame-11-1 frame-11-4">
+                                    <div class="frame-1190">
+                                        <div class="frame-119">
+                                            <div class="text-3">
+                                                <div class="text cairo-16-b"> عن الشركة:
+                                                    <p class=" cairo-normal-star-dust-13px">@Model.About</p>
+                                                </div>
+
+                                                <div class="text cairo-16-b">
+                                                    الموقع الإلكتروني:
+                                                    <p class=" cairo-normal-star-dust-13px">@Model.UrlLocation</p>
+                                                </div>
+
+
+                                                <div class="text cairo-16-b">
+                                                    قطاع العمل :
+                                                    <p class=" cairo-normal-star-dust-13px">@Model.CareerSectore</p>
+                                                </div>
+
+                                                <div class="text cairo-16-b">
+                                                    المقر الرئيسي :
+                                                    <p class=" cairo-normal-star-dust-13px">@Model.Headquarter</p>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="frame-1192">
+                            <div class="frame-12">
+                                <div class="frame-1190">
+                                        <a  asp-action="EmployerInfo" class="btn btn-primary form-control text-11 text cairo-semi-bold-trendy-pink-14px">
+                                            معلومات الشــركة
+                                        </a>
+                                    </div>
+                                <div class="frame-12">
+                                    <div class="frame-1190">
+                                        <a class="btn btn-primary form-control text-11 text cairo-semi-bold-trendy-pink-14px" href="@Url.Action("JobList", "job", new { id = user.Id })"></i>  عروضك الوظيفية</a>
+                                    </div>
+                                </div>
+                                <div class="frame-12">
+                                    <div class="frame-1190">
+                                        <a asp-area="" asp-controller="Job" asp-action="CreateJobOffer" class="btn btn-primary form-control text-11 text cairo-semi-bold-trendy-pink-14px">
+                                            وظّف الآن
+                                        </a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+
+    }
+}

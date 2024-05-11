@@ -1,0 +1,22 @@
+﻿
+<div class="text-8 cairo-16-b" style="text-align:left">آخر الأخبار</div>
+<div class="frame-4 roboto-normal-granite-gray-12px">
+    @if (ViewBag.news != null && ViewBag.news.Count > 0)
+    {
+        foreach (var news in ViewBag.news)
+        {
+            <div class="frame-1234">
+                <div class="news-content text-4 valign-text-middle cairo-14">
+                    <div style="direction: rtl;">
+                        <i class="bi bi-card-text"></i>
+                        @news.PostContent
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="text-4 valign-text-middle cairo-14">..بانتظار أخبار جديدة</div>
+    }
+</div>

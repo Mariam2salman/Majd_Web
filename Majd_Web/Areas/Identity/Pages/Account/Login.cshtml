@@ -1,0 +1,53 @@
+﻿@page
+@model LoginModel
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1440, maximum-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="~/css/StyleSingin.css" />
+</head>
+
+
+<body>
+    <div class="container-center-horizontal">
+        <div class="u1578u1587u1580u1610u1604-u1583u1582u1608u1604-u1582u1585u1610u1580 screen">
+            <div class="frame-1190">
+                <form id="account" method="post">
+                    <div class="frame-1190-1"><div class="text-3 text-4">تسجيل دخول </div></div>
+                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                    <div class="frame-1206">
+                        <div class="input">
+                            <label asp-for="Input.Email" class="text cairo-12">البريد الإلكتروني  </label>
+                            <input asp-for="Input.Email" class="form-control" />
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+                        <div class="frame-1202">
+                            <div class="input-1">
+                                <label asp-for="Input.Password" class="text cairo-12">كلمة المرور</label>
+                                <input asp-for="Input.Password" class="form-control" />
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="frame-1212">
+                        <button id="login-submit" class="button text-6 text-4" type="submit"> تسجيل</button>
+                        <div class="button-1">
+                            <a asp-controller="Home" asp-action="Index" class="text-5 cairo-medium-star-dust-14px ">
+                                إلغـاء
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>           
+        </div>
+
+    </div>
+</body>
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
